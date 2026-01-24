@@ -5,9 +5,13 @@ export default function TopBar({ themeName, onSwitchDesign, memeMode, onToggleMe
         <span className="brandDot" />
         <div>
           <div className="brandTitle">PETRUL</div>
-          <div className="logoSub">
-  Mystic Community <span className="mcBadge">mC</span>
+         <div className="logoSub">
+  Mystic Community
+  <span className="mcLogo">
+    <span className="mcInner">mC</span>
+  </span>
 </div>
+
 
         </div>
       </div>
