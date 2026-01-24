@@ -427,3 +427,86 @@ a:hover{ text-decoration:underline; }
   .brand{ min-width:auto; }
   .themeBadge{ display:none; }
 }
+/* ===============================
+   PETRUL â€” SAFE HERO PATCH (CSS-only)
+   Goal:
+   - Hero panel fully transparent
+   - Text always readable on any background
+   - No JS changes, no App.jsx edits
+   Paste this at the VERY END of src/styles.css
+   =============================== */
+
+:root{
+  --heroPlateOpacity: 0.38;
+  --heroPlateBlur: 12px;
+  --heroTextShadowA: rgba(0,0,0,0.78);
+  --heroTextShadowB: rgba(0,0,0,0.55);
+}
+
+/* Home hero section container transparent */
+#home .sectionInner{
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+#home .sectionInner::before,
+#home .sectionInner::after{
+  display:none !important;
+}
+
+/* Premium glass plate behind hero text only */
+#home .heroStage{
+  position:relative;
+  padding: 26px 14px 22px;
+}
+#home .heroStage::before{
+  content:"";
+  position:absolute;
+  inset: -12px -14px -14px;
+  border-radius: 28px;
+  background:
+    radial-gradient(900px 260px at 50% 0%,
+      rgba(255,255,255, calc(var(--heroPlateOpacity) * 0.18)),
+      rgba(255,255,255, 0) 55%),
+    radial-gradient(800px 240px at 18% 10%,
+      rgba(255,179,71, calc(var(--heroPlateOpacity) * 0.14)),
+      rgba(255,179,71, 0) 55%),
+    radial-gradient(820px 260px at 88% 18%,
+      rgba(90,220,255, calc(var(--heroPlateOpacity) * 0.10)),
+      rgba(90,220,255, 0) 60%),
+    linear-gradient(180deg,
+      rgba(0,0,0, calc(var(--heroPlateOpacity) * 0.62)),
+      rgba(0,0,0, calc(var(--heroPlateOpacity) * 0.36)) 45%,
+      rgba(0,0,0, 0) 100%);
+  backdrop-filter: blur(var(--heroPlateBlur));
+  -webkit-backdrop-filter: blur(var(--heroPlateBlur));
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow:
+    0 10px 34px rgba(0,0,0,0.30),
+    0 0 28px var(--glow);
+  pointer-events:none;
+}
+
+/* Text above plate */
+#home .heroStage > *{ position:relative; }
+
+/* Readable text on any background */
+#home .heroHeadline{
+  text-shadow:
+    0 4px 26px var(--heroTextShadowA),
+    0 1px 10px var(--heroTextShadowB),
+    0 0 34px var(--glow);
+  -webkit-text-stroke: 0.6px rgba(0,0,0,0.30);
+}
+#home .heroSub{
+  text-shadow:
+    0 3px 18px var(--heroTextShadowA),
+    0 1px 10px var(--heroTextShadowB);
+  -webkit-text-stroke: 0.35px rgba(0,0,0,0.22);
+}
+#home .heroCtas .btn{
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.30);
+}
