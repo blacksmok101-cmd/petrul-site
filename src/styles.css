@@ -674,3 +674,62 @@ a:hover{ text-decoration:underline; }
   #home .heroHeadline,
   #home .heroSub{ animation: none !important; }
 }
+/* ===== Mystic Community mini LOGO (mC) ===== */
+
+.logoSub{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* outer emblem */
+.mcLogo{
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, #fff3, transparent 45%),
+    linear-gradient(135deg, #ffb347, #ff7a18, #ffb347);
+  display: grid;
+  place-items: center;
+  box-shadow:
+    0 0 14px rgba(255,170,80,0.65),
+    inset 0 0 6px rgba(255,255,255,0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+/* glass shine sweep */
+.mcLogo::after{
+  content:"";
+  position:absolute;
+  inset: -40%;
+  background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.55), transparent 60%);
+  transform: translateX(-120%);
+  animation: mcShine 3.8s ease-in-out infinite;
+}
+
+@keyframes mcShine{
+  0%,70%{ transform: translateX(-120%); }
+  100%{ transform: translateX(120%); }
+}
+
+/* inner text */
+.mcInner{
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  color: #2a1406;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+  z-index: 1;
+}
+
+/* subtle pulse */
+.mcLogo{
+  animation: mcPulse 4.2s ease-in-out infinite;
+}
+
+@keyframes mcPulse{
+  0%,100%{ box-shadow: 0 0 14px rgba(255,170,80,0.55), inset 0 0 6px rgba(255,255,255,0.35); }
+  50%{ box-shadow: 0 0 22px rgba(255,190,110,0.85), inset 0 0 8px rgba(255,255,255,0.45); }
+}
