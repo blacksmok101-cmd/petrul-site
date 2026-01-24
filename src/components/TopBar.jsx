@@ -17,7 +17,6 @@ export default function TopBar({ themeName, onSwitchDesign, memeMode, onToggleMe
       </nav>
 
       <div className="topbarRight">
-        <div className="themeBadge" title="Current design">{themeName}</div>
         <button className="iconBtn" onClick={onSwitchDesign} title="Switch Design" aria-label="Switch Design">✦</button>
         <button className={`iconBtn ${memeMode ? "iconBtnOn" : ""}`} onClick={onToggleMeme} title="Meme Mode" aria-label="Meme Mode">☄</button>
         {rightSlot}
