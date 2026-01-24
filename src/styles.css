@@ -510,3 +510,167 @@ a:hover{ text-decoration:underline; }
   border-color: rgba(255,255,255,0.18);
   box-shadow: 0 12px 28px rgba(0,0,0,0.30);
 }
+/* ==============================================
+   PETRUL â€” HERO FX PATCH (CSS-only, safe)
+   Adds:
+   1) Soft glow animation on Hero headline/subtitle
+   2) Light moving mist overlay (behind text)
+   3) Theme-based glass tint (Gold / Neon / Dark etc.)
+   Notes:
+   - Paste at VERY END of src/styles.css
+   - Works with your existing hero transparent patch
+   - Theme tint uses modern :has() selector (Chrome/Safari/Edge OK)
+   ============================================== */
+
+/* ---------- Theme-based glass tint variables ---------- */
+/* Defaults (fallback) */
+:root{
+  --heroGlassTintA: rgba(255,179,71,0.14);  /* warm gold */
+  --heroGlassTintB: rgba(90,220,255,0.10);  /* neon cyan */
+  --heroGlassTintC: rgba(255,255,255,0.10);
+  --heroMistOpacity: 0.42;
+  --heroGlowStrength: 1.0;
+}
+
+/* Theme 1 â€” Gold Spill (warm, premium) */
+:root:has(.bgArt.theme1){
+  --heroGlassTintA: rgba(255,179,71,0.18);
+  --heroGlassTintB: rgba(255,120,60,0.10);
+  --heroGlassTintC: rgba(255,255,255,0.12);
+  --heroMistOpacity: 0.40;
+  --heroGlowStrength: 1.05;
+}
+
+/* Theme 2 â€” Neon Night (cool neon) */
+:root:has(.bgArt.theme2){
+  --heroGlassTintA: rgba(90,220,255,0.16);
+  --heroGlassTintB: rgba(210,120,255,0.12);
+  --heroGlassTintC: rgba(255,255,255,0.10);
+  --heroMistOpacity: 0.46;
+  --heroGlowStrength: 1.12;
+}
+
+/* Theme 3 â€” Abyss (darker, subtle) */
+:root:has(.bgArt.theme3){
+  --heroGlassTintA: rgba(120,255,210,0.12);
+  --heroGlassTintB: rgba(255,255,255,0.08);
+  --heroGlassTintC: rgba(255,255,255,0.10);
+  --heroMistOpacity: 0.36;
+  --heroGlowStrength: 0.95;
+}
+
+/* Theme 4 â€” Ember Smoke (warm cinematic) */
+:root:has(.bgArt.theme4){
+  --heroGlassTintA: rgba(255,140,80,0.16);
+  --heroGlassTintB: rgba(255,220,140,0.10);
+  --heroGlassTintC: rgba(255,255,255,0.10);
+  --heroMistOpacity: 0.40;
+  --heroGlowStrength: 1.06;
+}
+
+/* Theme 5 â€” Violet Oracle (mystic purple) */
+:root:has(.bgArt.theme5){
+  --heroGlassTintA: rgba(210,120,255,0.16);
+  --heroGlassTintB: rgba(90,220,255,0.10);
+  --heroGlassTintC: rgba(255,255,255,0.10);
+  --heroMistOpacity: 0.44;
+  --heroGlowStrength: 1.10;
+}
+
+/* ---------- Moving mist overlay (Hero only) ---------- */
+/* Creates a light animated fog layer INSIDE the hero plate area */
+#home .heroStage{ position:relative; }
+
+/* If you already have ::before as the plate, we add mist as ::after */
+#home .heroStage::after{
+  content:"";
+  position:absolute;
+  inset: -16px -18px -18px;
+  border-radius: 30px;
+  pointer-events:none;
+  opacity: var(--heroMistOpacity);
+  mix-blend-mode: soft-light;
+
+  background:
+    radial-gradient(520px 220px at 18% 20%, var(--heroGlassTintA), rgba(0,0,0,0) 62%),
+    radial-gradient(560px 240px at 82% 28%, var(--heroGlassTintB), rgba(0,0,0,0) 64%),
+    radial-gradient(700px 260px at 50% 80%, rgba(255,255,255,0.08), rgba(0,0,0,0) 70%),
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.00) 35%, rgba(0,0,0,0.00));
+
+  filter: blur(10px);
+  transform: translate3d(0,0,0);
+  animation: heroMistDrift 14s ease-in-out infinite;
+}
+
+@keyframes heroMistDrift{
+  0%{ transform: translate(-1.2%, -0.8%) scale(1.02); opacity: calc(var(--heroMistOpacity) * 0.95); }
+  50%{ transform: translate(1.2%, 1.0%) scale(1.06); opacity: calc(var(--heroMistOpacity) * 1.05); }
+  100%{ transform: translate(-1.2%, -0.8%) scale(1.02); opacity: calc(var(--heroMistOpacity) * 0.95); }
+}
+
+/* Ensure text stays above plate and mist */
+#home .heroStage > *{ position:relative; z-index:1; }
+
+/* ---------- Soft glow animation (Hero text) ---------- */
+#home .heroHeadline, #home .heroSub{
+  will-change: filter, text-shadow;
+}
+
+#home .heroHeadline{
+  animation: heroGlowPulse 3.6s ease-in-out infinite;
+}
+#home .heroSub{
+  animation: heroGlowPulseSub 4.4s ease-in-out infinite;
+}
+
+@keyframes heroGlowPulse{
+  0%{
+    text-shadow:
+      0 4px 26px rgba(0,0,0,0.78),
+      0 0 calc(26px * var(--heroGlowStrength)) rgba(255,255,255,0.08),
+      0 0 calc(34px * var(--heroGlowStrength)) var(--glow);
+    filter: saturate(1.02) brightness(1.00);
+  }
+  50%{
+    text-shadow:
+      0 4px 26px rgba(0,0,0,0.74),
+      0 0 calc(34px * var(--heroGlowStrength)) rgba(255,255,255,0.10),
+      0 0 calc(44px * var(--heroGlowStrength)) var(--glow);
+    filter: saturate(1.08) brightness(1.03);
+  }
+  100%{
+    text-shadow:
+      0 4px 26px rgba(0,0,0,0.78),
+      0 0 calc(26px * var(--heroGlowStrength)) rgba(255,255,255,0.08),
+      0 0 calc(34px * var(--heroGlowStrength)) var(--glow);
+    filter: saturate(1.02) brightness(1.00);
+  }
+}
+
+@keyframes heroGlowPulseSub{
+  0%{
+    text-shadow:
+      0 3px 18px rgba(0,0,0,0.74),
+      0 0 18px rgba(255,255,255,0.06);
+    filter: saturate(1.02);
+  }
+  50%{
+    text-shadow:
+      0 3px 18px rgba(0,0,0,0.70),
+      0 0 24px rgba(255,255,255,0.08);
+    filter: saturate(1.06);
+  }
+  100%{
+    text-shadow:
+      0 3px 18px rgba(0,0,0,0.74),
+      0 0 18px rgba(255,255,255,0.06);
+    filter: saturate(1.02);
+  }
+}
+
+/* Optional: disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  #home .heroStage::after,
+  #home .heroHeadline,
+  #home .heroSub{ animation: none !important; }
+}
