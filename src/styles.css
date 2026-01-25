@@ -1303,4 +1303,5 @@ button:hover, .btn:hover{
   --myst-accent-b:#49ff7c;
   --myst-accent-c:#aaff44;
 }
+.heroTitle{ outline: 3px solid lime !important; }
 
