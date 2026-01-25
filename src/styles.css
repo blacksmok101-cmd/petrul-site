@@ -841,3 +841,99 @@ a:hover{ text-decoration:underline; }
     animation: none !important;
   }
 }
+/* ===== TOPBAR RIGHT ICON BUTTONS — mC like premium glow ===== */
+
+/* Dəqiq sənin class-larına görə */
+.topbarRight .iconBtn{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+
+  border: 1px solid rgba(255,255,255,0.16);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.10), transparent 45%),
+    linear-gradient(135deg, rgba(255,179,71,0.16), rgba(90,220,255,0.10), rgba(255,255,255,0.06));
+
+  box-shadow:
+    0 0 14px rgba(255,170,80,0.35),
+    0 0 22px rgba(90,220,255,0.18),
+    inset 0 0 10px rgba(255,255,255,0.10);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transform: translateZ(0);
+  animation: petrulIconPulse 4.2s ease-in-out infinite;
+}
+
+/* Aktiv olanda (meme mode ON kimi) bir az daha parlaq */
+.topbarRight .iconBtn.iconBtnOn{
+  border-color: rgba(255,255,255,0.24);
+  box-shadow:
+    0 0 22px rgba(255,190,110,0.62),
+    0 0 30px rgba(90,220,255,0.26),
+    inset 0 0 14px rgba(255,255,255,0.14);
+}
+
+/* Shine sweep */
+.topbarRight .iconBtn::after{
+  content:"";
+  position:absolute;
+  inset:-60%;
+  background: linear-gradient(120deg, transparent 42%, rgba(255,255,255,0.55), transparent 58%);
+  transform: translateX(-140%);
+  animation: petrulIconShine 3.8s ease-in-out infinite;
+  pointer-events:none;
+  opacity: 0;
+}
+
+/* hover-da shine daha görünən olsun */
+.topbarRight .iconBtn:hover::after{
+  opacity: 1;
+}
+
+@keyframes petrulIconPulse{
+  0%,100%{
+    box-shadow:
+      0 0 14px rgba(255,170,80,0.32),
+      0 0 22px rgba(90,220,255,0.16),
+      inset 0 0 10px rgba(255,255,255,0.10);
+  }
+  50%{
+    box-shadow:
+      0 0 22px rgba(255,190,110,0.78),
+      0 0 34px rgba(90,220,255,0.30),
+      inset 0 0 14px rgba(255,255,255,0.14);
+  }
+}
+
+@keyframes petrulIconShine{
+  0%,68%{ transform: translateX(-140%); opacity: 0; }
+  75%{ opacity: 1; }
+  100%{ transform: translateX(140%); opacity: 0; }
+}
+
+/* Icon-un özü (emoji / svg / text) üçün glow */
+.topbarRight .iconBtn,
+.topbarRight .iconBtn *{
+  text-shadow: 0 0 10px rgba(255,255,255,0.14);
+}
+
+/* Hover premium lift */
+.topbarRight .iconBtn:hover{
+  transform: translateY(-1px) scale(1.02);
+  border-color: rgba(255,255,255,0.26);
+  box-shadow:
+    0 0 26px rgba(255,190,110,0.88),
+    0 0 36px rgba(90,220,255,0.34),
+    inset 0 0 14px rgba(255,255,255,0.16);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .topbarRight .iconBtn{ animation: none !important; }
+  .topbarRight .iconBtn::after{ animation: none !important; }
+}
+
