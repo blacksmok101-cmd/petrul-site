@@ -937,3 +937,108 @@ a:hover{ text-decoration:underline; }
   .topbarRight .iconBtn::after{ animation: none !important; }
 }
 
+/* ================================
+   PETRUL — FLAME + SMOKE OVERLAYS
+   Safe: CSS only, no JS
+   - Bottom flame (subtle) + rising smoke
+   - Global light drifting smoke
+   - Does not block clicks / readability
+================================ */
+
+/* We attach overlays to body so it covers all pages */
+body{
+  position: relative;
+}
+
+/* Global drifting smoke (very light) */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2; /* keep under UI that uses z-index >2; if needed increase your sections */
+  opacity: 0.22;            /* overall smoke strength */
+  mix-blend-mode: soft-light;
+  background:
+    radial-gradient(700px 320px at 20% 20%, rgba(220,220,220,0.10), rgba(0,0,0,0) 60%),
+    radial-gradient(900px 380px at 80% 30%, rgba(220,220,220,0.08), rgba(0,0,0,0) 62%),
+    radial-gradient(800px 360px at 50% 70%, rgba(220,220,220,0.06), rgba(0,0,0,0) 65%),
+    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0));
+  filter: blur(10px);
+  transform: translate3d(0,0,0);
+  animation: petrulGlobalSmoke 18s ease-in-out infinite;
+}
+
+@keyframes petrulGlobalSmoke{
+  0%   { transform: translate(-1.2%, 0%) scale(1.03); opacity: 0.18; }
+  50%  { transform: translate( 1.2%, -0.6%) scale(1.06); opacity: 0.24; }
+  100% { transform: translate(-1.2%, 0%) scale(1.03); opacity: 0.18; }
+}
+
+/* Bottom flame + rising smoke column */
+body::after{
+  content:"";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 42vh;
+  pointer-events: none;
+  z-index: 3; /* above background, below text overlays if they use higher z-index */
+  opacity: 0.90;
+
+  /* Layer stack:
+     1) flame glow at bottom
+     2) flame tongues
+     3) rising grey smoke
+  */
+  background:
+    /* rising smoke */
+    radial-gradient(620px 280px at 20% 92%, rgba(210,210,210,0.20), rgba(0,0,0,0) 70%),
+    radial-gradient(720px 320px at 70% 94%, rgba(210,210,210,0.16), rgba(0,0,0,0) 72%),
+    radial-gradient(900px 420px at 50% 120%, rgba(170,170,170,0.14), rgba(0,0,0,0) 68%),
+
+    /* flame tongues */
+    radial-gradient(260px 120px at 18% 100%, rgba(255,170,60,0.55), rgba(0,0,0,0) 65%),
+    radial-gradient(300px 140px at 38% 100%, rgba(255,120,40,0.50), rgba(0,0,0,0) 66%),
+    radial-gradient(360px 160px at 58% 100%, rgba(255,190,90,0.45), rgba(0,0,0,0) 68%),
+    radial-gradient(300px 140px at 80% 100%, rgba(255,110,40,0.42), rgba(0,0,0,0) 66%),
+
+    /* base ember glow */
+    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(255,120,40,0.20) 72%, rgba(255,120,40,0.34) 100%);
+
+  filter: blur(6px);
+  mix-blend-mode: screen;
+  transform: translate3d(0,0,0);
+  animation: petrulFlameFlicker 2.4s ease-in-out infinite, petrulSmokeRise 9.5s ease-in-out infinite;
+}
+
+/* Flame flicker (subtle) */
+@keyframes petrulFlameFlicker{
+  0%,100% { filter: blur(6px) brightness(1.05); }
+  50%     { filter: blur(7px) brightness(1.18); }
+}
+
+/* Smoke rise drift */
+@keyframes petrulSmokeRise{
+  0%   { background-position: 0% 0%, 0% 0%, 0% 0%,  0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; transform: translateY(0); opacity: 0.88; }
+  50%  { background-position: 8% -14%, -6% -10%, 4% -18%,  2% 0%, -2% 0%, 3% 0%, -3% 0%, 0% 0%; transform: translateY(-10px); opacity: 0.92; }
+  100% { background-position: 0% -26%, 0% -22%, 0% -30%,  0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; transform: translateY(-18px); opacity: 0.86; }
+}
+
+/* Make sure content stays readable above smoke layers */
+.section, .sectionInner, header, .topbar{
+  position: relative;
+  z-index: 10;
+}
+
+/* Reduce intensity on small screens (optional) */
+@media (max-width: 640px){
+  body::before{ opacity: 0.16; }
+  body::after{ opacity: 0.70; height: 36vh; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  body::before, body::after{ animation: none !important; }
+}
