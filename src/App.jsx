@@ -43,6 +43,15 @@ export default function App() {
 <div className="sideFlame rightFlame"></div>
 
       <div className="bgVeil" />
+<div className="sideSmoke leftSmoke" aria-hidden="true"></div>
+<div className="sideSmoke rightSmoke" aria-hidden="true"></div>
+
+<div className="embersLayer" aria-hidden="true">
+  {Array.from({ length: 12 }).map((_, i) => (
+    <span className="ember" key={i} style={{ "--i": i }} />
+  ))}
+</div>
+
 
       <TopBar
         themeName={theme.name}

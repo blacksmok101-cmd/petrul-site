@@ -947,7 +947,7 @@ a:hover{ text-decoration:underline; }
   pointer-events: none;
   z-index: 2;
   opacity: 0.62;
-  filter: blur(7px) saturate(1.35);
+  filter: blur(7px) saturate(1.35) url(#petrulHeatShimmer);
   overflow: hidden;
 }
 
@@ -1017,4 +1017,127 @@ a:hover{ text-decoration:underline; }
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   .sideFlame::before, .sideFlame::after{ animation: none !important; }
+}
+
+/* ================= SIDE SMOKE (rising) ================= */
+
+.sideSmoke{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 220px;
+  pointer-events: none;
+  z-index: 1;                 /* behind flames */
+  opacity: 0.22;              /* very light */
+  filter: blur(10px);
+  overflow: hidden;
+  mix-blend-mode: soft-light;
+}
+
+.leftSmoke{ left: -70px; }
+.rightSmoke{ right: -70px; transform: scaleX(-1); }
+
+.sideSmoke::before,
+.sideSmoke::after{
+  content:"";
+  position: absolute;
+  left: -10%;
+  width: 120%;
+  height: 200%;
+  top: 0;
+
+  background:
+    radial-gradient(140px 260px at 30% 90%, rgba(220,220,220,0.22), rgba(0,0,0,0) 72%),
+    radial-gradient(160px 320px at 55% 72%, rgba(220,220,220,0.18), rgba(0,0,0,0) 76%),
+    radial-gradient(200px 420px at 50% 50%, rgba(220,220,220,0.14), rgba(0,0,0,0) 78%),
+    radial-gradient(240px 520px at 45% 30%, rgba(220,220,220,0.10), rgba(0,0,0,0) 80%);
+
+  will-change: transform;
+  transform: translate3d(0,0,0);
+}
+
+/* true seamless rise: two strips */
+.sideSmoke::before{
+  top: 0;
+  animation: smokeMarquee 26s linear infinite;
+  opacity: 0.9;
+}
+.sideSmoke::after{
+  top: -200%;
+  animation: smokeMarquee 26s linear infinite;
+  opacity: 0.65;
+}
+
+@keyframes smokeMarquee{
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(200%); }
+}
+
+/* Mobile lower intensity */
+@media (max-width: 900px){
+  .sideSmoke{ width: 140px; opacity: 0.16; }
+}
+/* ================= EMBERS (sparks) ================= */
+
+.embersLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;              /* above smoke, near flames; below UI if UI is >10 */
+  opacity: 0.55;
+}
+
+.ember{
+  position: absolute;
+  left: 0;
+  top: 85%;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+
+  background: radial-gradient(circle, rgba(255,210,120,0.95), rgba(255,110,45,0.35) 60%, rgba(0,0,0,0) 75%);
+  filter: blur(0.2px);
+  will-change: transform, opacity;
+
+  /* each ember gets its own start location + duration via CSS vars */
+  transform: translate3d(0,0,0);
+
+  animation: emberFloat var(--dur) linear infinite;
+  animation-delay: var(--delay);
+  opacity: 0;
+}
+
+/* distribute embers (12 items) */
+.ember{
+  --x: calc(10% + (var(--i) * 7%));
+  --dur: calc(10s + (var(--i) * 1.2s));
+  --delay: calc((var(--i) * -1.4s));
+}
+
+/* left side cluster */
+.ember:nth-child(n){
+  left: var(--x);
+}
+
+/* sprinkle some to right side by shifting last ones */
+.ember:nth-child(7),
+.ember:nth-child(8),
+.ember:nth-child(9),
+.ember:nth-child(10),
+.ember:nth-child(11),
+.ember:nth-child(12){
+  left: calc(55% + (var(--i) * 3.2%));
+}
+
+@keyframes emberFloat{
+  0%   { transform: translate3d(0, 0, 0) scale(0.8); opacity: 0; }
+  10%  { opacity: 0.9; }
+  55%  { opacity: 0.55; }
+  100% { transform: translate3d(0, -95vh, 0) scale(1.05); opacity: 0; }
+}
+
+/* Mobile: fewer sparks & weaker */
+@media (max-width: 900px){
+  .embersLayer{ opacity: 0.35; }
+  .ember{ width: 5px; height: 5px; }
 }
