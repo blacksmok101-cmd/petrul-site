@@ -37,6 +37,31 @@ export default function App() {
 
   return (
     <div className="app">
+<svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true" focusable="false">
+  <filter id="petrulFlameNoise" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence
+      type="fractalNoise"
+      baseFrequency="0.012 0.06"
+      numOctaves="2"
+      seed="8"
+      stitchTiles="stitch"
+      result="noise"
+    />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+
+  <filter id="petrulHeatShimmer" x="-25%" y="-25%" width="150%" height="150%">
+    <feTurbulence
+      type="turbulence"
+      baseFrequency="0.02 0.09"
+      numOctaves="1"
+      seed="12"
+      result="turb2"
+    />
+    <feDisplacementMap in="SourceGraphic" in2="turb2" scale="10" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+</svg>
+
       <BackgroundArt themeId={themeId} />
 <div className="sideFlame leftFlame"></div>
 <div className="sideFlame rightFlame"></div>

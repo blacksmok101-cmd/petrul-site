@@ -950,6 +950,17 @@ a:hover{ text-decoration:underline; }
   filter: blur(7px) saturate(1.35);
   overflow: hidden;
 }
+/* Apply perlin-ish distortion to flames (more alive) */
+.sideFlame::before,
+.sideFlame::after{
+  filter: url(#petrulFlameNoise);
+}
+
+/* Slight heat shimmer on top of noise */
+.sideFlame{
+  filter: blur(7px) saturate(1.35) url(#petrulHeatShimmer);
+}
+
 
 .leftFlame{ left: -46px; }
 .rightFlame{ right: -46px; transform: scaleX(-1); }
