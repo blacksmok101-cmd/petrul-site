@@ -1529,3 +1529,60 @@ root{
   from{ background-position: 0 100%; }
   to{ background-position: 0 -100%; }
 }
+.appRoot{
+  position: relative;
+  z-index: 2;
+}
+.bgArt{
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.sideFlames{
+  position: fixed;
+  top: -20%;
+  bottom: -20%;
+  width: 160px;
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255,190,100,.65), transparent 60%),
+    radial-gradient(circle at 40% 60%, rgba(255,120,0,.35), transparent 70%),
+    linear-gradient(to top, rgba(255,120,0,.55), transparent 70%);
+
+  filter: blur(14px);
+  opacity: 1;
+  mix-blend-mode: screen;
+  animation: flameFlow 18s linear infinite;
+}
+
+.sideFlames.left{ left: -50px; }
+.sideFlames.right{ right: -50px; transform: scaleX(-1); }
+
+@keyframes flameFlow{
+  from{ background-position: 0% 0%; }
+  to{ background-position: 0% 200%; }
+}
+
+.embers{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    radial-gradient(circle, rgba(255,210,140,.9) 0 1px, transparent 2px) repeat;
+
+  background-size: 140px 140px;
+  opacity: .35;
+  filter: blur(.2px);
+  animation: emberDrift 36s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes emberDrift{
+  from{ background-position: 0 100%; }
+  to{ background-position: 0 -100%; }
+}

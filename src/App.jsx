@@ -40,9 +40,10 @@ export default function App() {
 
   return (
     <div className="app">
-<div className="sideFlame leftFlame"></div>
-<div className="sideFlame rightFlame"></div>
-<div id="root">
+<div className="sideSmoke leftSmoke" aria-hidden="true"></div>
+<div className="sideSmoke rightSmoke" aria-hidden="true"></div>
+<div className="embers"></div>
+<div className="appRoot">
       <BackgroundArt themeId={themeId} />
 <BackgroundArt themeId={themeId} />
 
@@ -50,14 +51,10 @@ export default function App() {
 <div className="edgeFlame edgeFlameRight" aria-hidden="true" />
 
 {/* qalan hissə: TopBar, Hero, ... */}
-
-
-
+2
 
       <div className="bgVeil" />
-<div className="sideSmoke leftSmoke" aria-hidden="true"></div>
-<div className="sideSmoke rightSmoke" aria-hidden="true"></div>
-<div className="embers"></div>
+
 
 <div className="embersLayer" aria-hidden="true">
   {Array.from({ length: 12 }).map((_, i) => (
