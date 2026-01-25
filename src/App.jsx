@@ -40,16 +40,19 @@ export default function App() {
 
 
   return (
-<div className="sideFlames" aria-hidden="true"></div>
-<div className="embers" aria-hidden="true"></div>
+   <>
+    {/* FX layers (DOM-da görünməlidir) */}
+    <div className="sideFlames left" aria-hidden="true" />
+    <div className="sideFlames right" aria-hidden="true" />
+    <div className="embers" aria-hidden="true" />
 
+    {/* Sənin əsas app wrapper-in */}
     <div className="app">
-<div className="sideSmoke leftSmoke" aria-hidden="true"></div>
-<div className="sideSmoke rightSmoke" aria-hidden="true"></div>
-<div className="embers"></div>
-<div className="appRoot">
-      <BackgroundArt themeId={themeId} />
-<BackgroundArt themeId={themeId} />
+      <div className="sideSmoke leftSmoke" aria-hidden="true" />
+      <div className="sideSmoke rightSmoke" aria-hidden="true" />
+
+      <div className="appRoot">
+        <BackgroundArt themeId={themeId} />>
 
 <div className="edgeFlame edgeFlameLeft" aria-hidden="true" />
 <div className="edgeFlame edgeFlameRight" aria-hidden="true" />
