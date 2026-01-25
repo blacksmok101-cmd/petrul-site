@@ -38,7 +38,11 @@ export default function App() {
 
   const switchDesign = () => setThemeIdx((i) => (i + 1) % themes.length);
 
+
   return (
+<div className="sideFlames" aria-hidden="true"></div>
+<div className="embers" aria-hidden="true"></div>
+
     <div className="app">
 <div className="sideSmoke leftSmoke" aria-hidden="true"></div>
 <div className="sideSmoke rightSmoke" aria-hidden="true"></div>
@@ -51,7 +55,7 @@ export default function App() {
 <div className="edgeFlame edgeFlameRight" aria-hidden="true" />
 
 {/* qalan hissə: TopBar, Hero, ... */}
-2
+
 
       <div className="bgVeil" />
 
