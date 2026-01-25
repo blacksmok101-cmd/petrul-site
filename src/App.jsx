@@ -14,6 +14,7 @@ import Footer from "./sections/Footer.jsx";
 
 function BackgroundArt({ themeId }) {
   return <div className={`bgArt theme${themeId}`} aria-hidden="true" />;
+
 }
 
 export default function App() {
@@ -37,6 +38,9 @@ export default function App() {
   return (
     <div className="app">
       <BackgroundArt themeId={themeId} />
+<div className="sideFlame leftFlame"></div>
+<div className="sideFlame rightFlame"></div>
+
       <div className="bgVeil" />
 
       <TopBar
