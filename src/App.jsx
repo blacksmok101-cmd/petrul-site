@@ -40,7 +40,9 @@ export default function App() {
 
   return (
     <div className="app">
-
+<div className="sideFlame leftFlame"></div>
+<div className="sideFlame rightFlame"></div>
+<div id="root">
       <BackgroundArt themeId={themeId} />
 <BackgroundArt themeId={themeId} />
 
@@ -49,8 +51,7 @@ export default function App() {
 
 {/* qalan hissə: TopBar, Hero, ... */}
 
-<div className="sideFlame leftFlame"></div>
-<div className="sideFlame rightFlame"></div>
+
 
 
       <div className="bgVeil" />
