@@ -14,6 +14,24 @@
   --panelStroke: rgba(255,255,255,0.14);
   --panelStroke2: rgba(255,255,255,0.08);
 }
+:root{
+  --font-title: "Cinzel", ui-serif, Georgia, serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  /* Default Mystical Palette (Gold-ish) */
+  --myst-ink: rgba(255,255,255,0.92);
+  --myst-muted: rgba(255,255,255,0.72);
+
+  --myst-accent-a: #f7d37a;  /* warm gold */
+  --myst-accent-b: #ff7a2d;  /* ember orange */
+  --myst-accent-c: #a76bff;  /* arcane violet */
+
+  --myst-glow: 0 0 12px rgba(255, 180, 90, 0.22), 0 0 28px rgba(167, 107, 255, 0.12);
+  --myst-glow-strong: 0 0 18px rgba(255, 180, 90, 0.32), 0 0 44px rgba(167, 107, 255, 0.16);
+
+  --myst-text-grad: linear-gradient(90deg, var(--myst-accent-a), var(--myst-accent-c), var(--myst-accent-b));
+}
+
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
@@ -1141,3 +1159,148 @@ a:hover{ text-decoration:underline; }
   .embersLayer{ opacity: 0.35; }
   .ember{ width: 5px; height: 5px; }
 }
+/* ============ GLOBAL TYPOGRAPHY (MYSTIC) ============ */
+
+body{
+  font-family: var(--font-body);
+  color: var(--myst-ink);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.2px;
+}
+
+h1,h2,h3,.heroTitle,.brandTitle{
+  font-family: var(--font-title);
+  letter-spacing: 1.2px;
+  text-transform: none;
+}
+
+p,li,span,input,button,textarea,label{
+  font-family: var(--font-body);
+}
+
+/* Links & nav */
+a, .nav a{
+  color: var(--myst-ink);
+  text-decoration: none;
+  transition: transform .2s ease, text-shadow .25s ease, opacity .2s ease;
+}
+
+.nav a{
+  letter-spacing: 0.9px;
+  opacity: 0.88;
+}
+
+.nav a:hover{
+  opacity: 1;
+  text-shadow: var(--myst-glow);
+  transform: translateY(-1px);
+}
+
+/* Hero main title mystical gradient */
+.hero h1,
+.heroTitle{
+  background: var(--myst-text-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: var(--myst-glow-strong);
+  animation: mystGlowPulse 3.8s ease-in-out infinite;
+}
+.hero h1{
+  position:relative;
+}
+
+.hero h1::after{
+  content:attr(data-text);
+  position:absolute;
+  inset:0;
+  filter:blur(18px);
+  opacity:.35;
+  background:var(--myst-text-grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  z-index:-1;
+  animation: arcanePulse 6s ease-in-out infinite;
+}
+
+@keyframes arcanePulse{
+  0%,100%{opacity:.25; filter:blur(18px);}
+  50%{opacity:.45; filter:blur(26px);}
+}
+
+
+/* Hero subtitle */
+.hero p, .heroSubtitle{
+  color: var(--myst-muted);
+  text-shadow: 0 0 14px rgba(0,0,0,0.45);
+}
+
+/* Section titles */
+.section h2, .sectionTitle{
+  background: linear-gradient(90deg, rgba(255,255,255,0.95), var(--myst-accent-a));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: var(--myst-glow);
+}
+
+/* Buttons */
+button, .btn{
+  color: var(--myst-ink);
+}
+
+button:hover, .btn:hover{
+  box-shadow: var(--myst-glow);
+}
+
+/* Soft pulse without annoying flicker */
+@keyframes mystGlowPulse{
+  0%,100%{ filter: brightness(1.02); }
+  50%{ filter: brightness(1.10); }
+}
+/* ================= THEME COLOR OVERRIDES ================= */
+
+/* DEFAULT (theme0 varsa) */
+.bgArt.theme0 ~ *{
+  --myst-accent-a:#f7d37a;
+  --myst-accent-b:#ff7a2d;
+  --myst-accent-c:#a76bff;
+}
+
+/* THEME 1 — GOLD FIRE */
+.bgArt.theme1 ~ *{
+  --myst-accent-a:#ffd27d;
+  --myst-accent-b:#ff8c3a;
+  --myst-accent-c:#ffcc55;
+}
+
+/* THEME 2 — NEON ARCANE */
+.bgArt.theme2 ~ *{
+  --myst-accent-a:#62f6ff;
+  --myst-accent-b:#ff4dff;
+  --myst-accent-c:#7cffa6;
+}
+
+/* THEME 3 — DARK MYST */
+.bgArt.theme3 ~ *{
+  --myst-accent-a:#c7d2fe;
+  --myst-accent-b:#a78bfa;
+  --myst-accent-c:#f59e0b;
+}
+
+/* THEME 4 — BLOOD EMBER */
+.bgArt.theme4 ~ *{
+  --myst-accent-a:#ffb3b3;
+  --myst-accent-b:#ff3b3b;
+  --myst-accent-c:#ff9a3b;
+}
+
+/* THEME 5 — OIL GREEN */
+.bgArt.theme5 ~ *{
+  --myst-accent-a:#b9ffb0;
+  --myst-accent-b:#49ff7c;
+  --myst-accent-c:#aaff44;
+}
+
