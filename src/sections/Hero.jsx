@@ -4,8 +4,8 @@ export default function Hero() {
   return (
     <Section id="home" title="">
       <div className="heroStage">
-        <div <h1 className="heroTitle" data-text="Welcome to PETRUL">Welcome to PETRUL</h1>
-</div>
+      <h1 className="heroTitle" data-text="Welcome to PETRUL">Welcome to PETRUL</h1>
+
         <div <p className="heroSubtitle">A mystical journey through the ancient world of petroleum and entertainment</p>
 </div>
         <div className="heroCtas">
