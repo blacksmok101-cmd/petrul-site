@@ -42,6 +42,13 @@ export default function App() {
     <div className="app">
 
       <BackgroundArt themeId={themeId} />
+<BackgroundArt themeId={themeId} />
+
+<div className="edgeFlame edgeFlameLeft" aria-hidden="true" />
+<div className="edgeFlame edgeFlameRight" aria-hidden="true" />
+
+{/* qalan hissə: TopBar, Hero, ... */}
+
 <div className="sideFlame leftFlame"></div>
 <div className="sideFlame rightFlame"></div>
 

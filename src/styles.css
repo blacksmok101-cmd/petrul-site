@@ -14,23 +14,7 @@
   --panelStroke: rgba(255,255,255,0.14);
   --panelStroke2: rgba(255,255,255,0.08);
 }
-:root{
-  --font-title: "Cinzel", ui-serif, Georgia, serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
-  /* Default Mystical Palette (Gold-ish) */
-  --myst-ink: rgba(255,255,255,0.92);
-  --myst-muted: rgba(255,255,255,0.72);
-
-  --myst-accent-a: #f7d37a;  /* warm gold */
-  --myst-accent-b: #ff7a2d;  /* ember orange */
-  --myst-accent-c: #a76bff;  /* arcane violet */
-
-  --myst-glow: 0 0 12px rgba(255, 180, 90, 0.22), 0 0 28px rgba(167, 107, 255, 0.12);
-  --myst-glow-strong: 0 0 18px rgba(255, 180, 90, 0.32), 0 0 44px rgba(167, 107, 255, 0.16);
-
-  --myst-text-grad: linear-gradient(90deg, var(--myst-accent-a), var(--myst-accent-c), var(--myst-accent-b));
-}
 
 
 *{ box-sizing:border-box; }
@@ -1389,4 +1373,121 @@ button:hover, .btn:hover{
 @keyframes emberFloat{
   from{ background-position-y: 100%; }
   to{ background-position-y: -20%; }
+}
+/* ===== Side Edge Flames (seamless, slow, premium) ===== */
+.edgeFlame{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: clamp(26px, 4.2vw, 72px);
+  z-index: 1;               /* bgArt(0) < flames(1) < content(>2) */
+  pointer-events: none;
+  opacity: .85;
+  mix-blend-mode: screen;
+  filter: saturate(1.2) contrast(1.05);
+}
+
+.edgeFlameLeft{ left: 0; }
+.edgeFlameRight{ right: 0; transform: scaleX(-1); }
+
+/* Core flame body */
+.edgeFlame::before{
+  content:"";
+  position:absolute;
+  inset:-12%;
+  background:
+    radial-gradient(60% 16% at 30% 12%, rgba(255,210,130,.55) 0%, rgba(255,150,60,.18) 35%, transparent 70%),
+    radial-gradient(65% 18% at 45% 28%, rgba(255,170,70,.60) 0%, rgba(255,110,40,.22) 38%, transparent 72%),
+    radial-gradient(70% 20% at 40% 48%, rgba(255,120,40,.55) 0%, rgba(255,80,25,.18) 40%, transparent 74%),
+    radial-gradient(90% 26% at 55% 72%, rgba(255,80,18,.45) 0%, rgba(140,30,6,.10) 45%, transparent 76%),
+    linear-gradient(to right,
+      rgba(255,180,70,.20) 0%,
+      rgba(255,120,35,.16) 30%,
+      rgba(255,70,15,.10) 60%,
+      transparent 92%
+    );
+  animation: flameDrift 16s linear infinite;
+  will-change: background-position, transform, filter;
+}
+
+/* Secondary shimmer/noise layer for life (subtle) */
+.edgeFlame::after{
+  content:"";
+  position:absolute;
+  inset:-18%;
+  background:
+    radial-gradient(40% 14% at 55% 20%, rgba(255,220,160,.22) 0%, transparent 65%),
+    radial-gradient(50% 18% at 40% 55%, rgba(255,140,70,.18) 0%, transparent 70%),
+    radial-gradient(55% 22% at 60% 80%, rgba(255,90,25,.16) 0%, transparent 76%);
+  filter: blur(7px);
+  opacity: .75;
+  animation: flameWobble 9s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+/* Seamless motion: use two vertical cycles + slight horizontal wobble */
+@keyframes flameDrift{
+  0%{
+    background-position:
+      0% 0%,
+      0% 0%,
+      0% 0%,
+      0% 0%,
+      0% 0%;
+    transform: translateX(0px);
+    filter: blur(0px) saturate(1.15);
+  }
+  50%{
+    background-position:
+      0% 45%,
+      0% 52%,
+      0% 40%,
+      0% 55%,
+      0% 48%;
+    transform: translateX(2px);
+    filter: blur(.35px) saturate(1.25);
+  }
+  100%{
+    background-position:
+      0% 90%,
+      0% 100%,
+      0% 85%,
+      0% 110%,
+      0% 96%;
+    transform: translateX(0px);
+    filter: blur(0px) saturate(1.15);
+  }
+}
+
+@keyframes flameWobble{
+  0%{ transform: translateX(0px) translateY(-1.5%); opacity:.62; }
+  100%{ transform: translateX(3px) translateY(1.5%); opacity:.86; }
+}
+
+/* Keep flames behind readable cards/sections if needed */
+.section, .topbar, .footer{
+  position: relative;
+  z-index: 3;
+}
+
+:root{
+  --font-title: "Cinzel", ui-serif, Georgia, serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  /* Default Mystical Palette (Gold-ish) */
+  --myst-ink: rgba(255,255,255,0.92);
+  --myst-muted: rgba(255,255,255,0.72);
+
+  --myst-accent-a: #f7d37a;  /* warm gold */
+  --myst-accent-b: #ff7a2d;  /* ember orange */
+  --myst-accent-c: #a76bff;  /* arcane violet */
+
+  --myst-glow: 0 0 12px rgba(255, 180, 90, 0.22), 0 0 28px rgba(167, 107, 255, 0.12);
+  --myst-glow-strong: 0 0 18px rgba(255, 180, 90, 0.32), 0 0 44px rgba(167, 107, 255, 0.16);
+
+  --myst-text-grad: linear-gradient(90deg, var(--myst-accent-a), var(--myst-accent-c), var(--myst-accent-b));
+}
+root{
+  position: relative;
+  z-index: 2;
 }
