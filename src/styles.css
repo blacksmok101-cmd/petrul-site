@@ -987,6 +987,6 @@ a:hover{ text-decoration:underline; }
 @media (max-width: 900px){
   .sideFlame{
     width: 90px;
-    opacity: 16s → 22s;
+    opacity: 0.4;
   }
 }
