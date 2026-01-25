@@ -16,6 +16,9 @@ function BackgroundArt({ themeId }) {
   return <div className={`bgArt theme${themeId}`} aria-hidden="true" />;
 
 }
+<div className="sideSmoke left"/>
+<div className="sideSmoke right"/>
+
 
 export default function App() {
   const [themeIdx, setThemeIdx] = useState(storage.get("petrul_theme_idx", 0));
@@ -46,7 +49,8 @@ export default function App() {
 <div className="sideSmoke leftSmoke" aria-hidden="true"></div>
 <div className="sideSmoke rightSmoke" aria-hidden="true"></div>
 
-<div className="embersLayer" aria-hidden="true">
+<div className="embersLayer" <div className="embers"/>
+ aria-hidden="true">
   {Array.from({ length: 12 }).map((_, i) => (
     <span className="ember" key={i} style={{ "--i": i }} />
   ))}
