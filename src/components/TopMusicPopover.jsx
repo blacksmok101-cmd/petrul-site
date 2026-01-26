@@ -8,6 +8,11 @@ export default function TopMusicPopover({ theme }) {
     { name: "Track 3", src: "/assets/track3.mp3" },
     { name: "Track 4", src: "/assets/track4.mp3" },
     { name: "Track 5", src: "/assets/track5.mp3" },
+    { name: "Track 6", src: "/assets/track6.mp3" },
+    { name: "Track 7", src: "/assets/track7.mp3" },
+    { name: "Track 8", src: "/assets/track8.mp3" },
+    { name: "Track 9", src: "/assets/track9.mp3" },
+    { name: "Track 10", src: "/assets/track10.mp3" },
   ]), []);
 
   const audioRef = useRef(null);
