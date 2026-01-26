@@ -14,11 +14,7 @@ import Footer from "./sections/Footer.jsx";
 
 function BackgroundArt({ themeId }) {
   return <div className={`bgArt theme${themeId}`} aria-hidden="true" />;
-
 }
-<div className="sideSmoke left"/>
-<div className="sideSmoke right"/>
-
 
 export default function App() {
   const [themeIdx, setThemeIdx] = useState(storage.get("petrul_theme_idx", 0));
@@ -38,57 +34,52 @@ export default function App() {
 
   const switchDesign = () => setThemeIdx((i) => (i + 1) % themes.length);
 
-
   return (
-   <>
-    {/* FX layers (DOM-da görünməlidir) */}
-    <div className="sideFlames left" aria-hidden="true" />
-    <div className="sideFlames right" aria-hidden="true" />
-    <div className="embers" aria-hidden="true" />
+    <>
+      {/* FX layers (DOM-da görünməlidir) */}
+      <div className="sideFlames left" aria-hidden="true" />
+      <div className="sideFlames right" aria-hidden="true" />
+      <div className="embers" aria-hidden="true" />
 
-    {/* Sənin əsas app wrapper-in */}
-    <div className="app">
-      <div className="sideSmoke leftSmoke" aria-hidden="true" />
-      <div className="sideSmoke rightSmoke" aria-hidden="true" />
+      {/* Əsas wrapper */}
+      <div className="app">
+        <div className="sideSmoke leftSmoke" aria-hidden="true" />
+        <div className="sideSmoke rightSmoke" aria-hidden="true" />
 
-      <div className="appRoot">
-        <BackgroundArt themeId={themeId} />>
+        <div className="appRoot">
+          <BackgroundArt themeId={themeId} />
 
-<div className="edgeFlame edgeFlameLeft" aria-hidden="true" />
-<div className="edgeFlame edgeFlameRight" aria-hidden="true" />
+          <div className="edgeFlame edgeFlameLeft" aria-hidden="true" />
+          <div className="edgeFlame edgeFlameRight" aria-hidden="true" />
 
-{/* qalan hissə: TopBar, Hero, ... */}
+          <div className="bgVeil" />
 
+          <div className="embersLayer" aria-hidden="true">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <span className="ember" key={i} style={{ "--i": i }} />
+            ))}
+          </div>
 
-      <div className="bgVeil" />
+          <TopBar
+            themeName={theme.name}
+            onSwitchDesign={switchDesign}
+            memeMode={memeMode}
+            onToggleMeme={() => setMemeMode((v) => !v)}
+            rightSlot={<TopMusicPopover theme={theme} />}
+          />
 
+          <MemeModeOverlay enabled={memeMode} theme={theme} themeId={themeId} />
 
-<div className="embersLayer" aria-hidden="true">
-  {Array.from({ length: 12 }).map((_, i) => (
-    <span className="ember" key={i} style={{ "--i": i }} />
-  ))}
-</div>
+          <main className="main">
+            <Hero />
+            <About />
+            <BarronSimulator theme={theme} />
+            <MemeMaker />
+          </main>
 
-
-      <TopBar
-        themeName={theme.name}
-        onSwitchDesign={switchDesign}
-        memeMode={memeMode}
-        onToggleMeme={() => setMemeMode((v) => !v)}
-        rightSlot={<TopMusicPopover theme={theme} />}
-      />
-
-      <MemeModeOverlay enabled={memeMode} theme={theme} themeId={themeId} />
-
-      <main className="main">
-        <Hero />
-        <About />
-        <BarronSimulator theme={theme} />
-        <MemeMaker />
-      </main>
-
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </>
   );
-  </>
 }
