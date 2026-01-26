@@ -12,7 +12,7 @@ export default function TopMusicPopover({ theme }) {
 { name: "Track 7", src: "/assets/track7.mp3" },
 { name: "Track 8", src: "/assets/track8.mp3" },
 { name: "Track 9", src: "/assets/track9.mp3" },
-{ name: "Track 10", src: "/assets/track10.mp3" },
+{ name: "Track 10", src: "/assets/track10.mp3"},
 
   ]), []);
 
