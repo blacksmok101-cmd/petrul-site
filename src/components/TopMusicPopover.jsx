@@ -3,16 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function TopMusicPopover({ theme }) {
   const tracks = useMemo(() => ([
-    { name: "Track 1", src: "/assets/track1.mp3" },
-    { name: "Track 2", src: "/assets/track2.mp3" },
-    { name: "Track 3", src: "/assets/track3.mp3" },
-    { name: "Track 4", src: "/assets/track4.mp3" },
-    { name: "Track 5", src: "/assets/track5.mp3" },
-{ name: "Track 6", src: "/assets/track6.mp3" },
-{ name: "Track 7", src: "/assets/track7.mp3" },
-{ name: "Track 8", src: "/assets/track8.mp3" },
-{ name: "Track 9", src: "/assets/track9.mp3" },
-{ name: "Track 10", src: "/assets/track10.mp3"},
+    { name: "Track 1", public: "/assets/track1.mp3" },
+    { name: "Track 2", public: "/assets/track2.mp3" },
+    { name: "Track 3", public: "/assets/track3.mp3" },
+    { name: "Track 4", public: "/assets/track4.mp3" },
+    { name: "Track 5", public: "/assets/track5.mp3" },
+{ name: "Track 6", public: "/assets/track6.mp3" },
+{ name: "Track 7", public: "/assets/track7.mp3" },
+{ name: "Track 8", public: "/assets/track8.mp3" },
+{ name: "Track 9", public: "/assets/track9.mp3" },
+{ name: "Track 10", public: "/assets/track10.mp3"},
 
   ]), []);
 
