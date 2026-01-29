@@ -4,6 +4,8 @@ export default function TopBar({ themeName, onSwitchDesign, memeMode, onToggleMe
       <div className="brand">
         <span className="brandDot" />
         <div>
+          <img src="/assets/mascot.png" alt="Petrul mascot" className="topbarMascot" />
+
           <div className="brandTitle">PETRUL</div>
          <div className="logoSub">
   Mystic Community

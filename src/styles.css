@@ -1,19 +1,28 @@
+
+
 /* Petrul — Premium Glass Panels (tuned for visible backgrounds) */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@400;600&family=Uncial+Antiqua&family=Inter:wght@400;600;800&family=Orbitron:wght@500;700&display=swap");
+
 
 :root{
   --accent:#ffb347;
-  --glow:rgba(255,179,71,.35);
-  --font: system-ui, sans-serif;
-  --text:#f6f2ea;
+  --glow:rgba(255,179,71,.45);
+  --text:#f8f4ec;
+  --muted: rgba(248,244,236,.85);
 
-  /* Premium layered panel colors (subtle, not black) */
-  --panelA: rgba(25, 16, 40, 0.52);   /* deep violet */
-  --panelB: rgba(10, 34, 40, 0.44);   /* petrol teal */
-  --panelC: rgba(40, 24, 12, 0.46);   /* warm amber */
-  --panelD: rgba(14, 12, 20, 0.18);   /* soft shadow wash */
-  --panelStroke: rgba(255,255,255,0.14);
-  --panelStroke2: rgba(255,255,255,0.08);
+  --font-title: "Cinzel Decorative", serif;
+  --font-body: "Cormorant Garamond", serif;
+
+  /* 🔥 MUCH LIGHTER glass panels */
+  --panelStroke: rgba(255,255,255,0.28);
+  --panelStroke2: rgba(255,255,255,0.34);
+
+  --panelA: rgba(80,60,120,0.48);
+  --panelB: rgba(40,90,100,0.44);
+  --panelC: rgba(110,80,40,0.48);
 }
+
 
 
 
@@ -26,6 +35,10 @@ body{
   background:#050507;
   overflow-x:hidden;
 }
+
+body{ font-family: var(--font-body); color: var(--text); }
+h1,h2,h3,.heroTitle{ font-family: var(--font-title); }
+
 a{ color:inherit; text-decoration:none; }
 a:hover{ text-decoration:underline; }
 
@@ -161,12 +174,13 @@ a:hover{ text-decoration:underline; }
 .smallLabel{ font-size: 11px; opacity:.8; text-transform: uppercase; letter-spacing: .8px; }
 
 /* Music popover */
-.topPlayer{ position:relative; }
+.topPlayer{ position:relative; z-index: 2000; }
 .topPlayerPopover{
   position:absolute;
   right:0;
   top:44px;
   width:280px;
+  z-index: 2001;
   border-radius:18px;
   border:1px solid rgba(255,255,255,0.16);
   background:
@@ -1287,7 +1301,7 @@ button:hover, .btn:hover{
   --myst-accent-b:#49ff7c;
   --myst-accent-c:#aaff44;
 }
-.heroTitle{ outline: 3px solid lime !important; }
+
 
 .heroTitle{
   position: relative;
@@ -1658,4 +1672,663 @@ root{
   10%  { opacity: .9; }
   100% { transform: translate3d(0,-620px,0) scale(1.1); opacity: 0; }
 }
+/* ===== Mystic Music Player (Top Right Popover) ===== */
+.mysticPlayer{
+  width: 340px !important;
+  padding: 14px !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(255,255,255,0.16);
+  background:
+    radial-gradient(420px 180px at 18% 0%, rgba(255,255,255,0.08), rgba(255,255,255,0) 55%),
+    linear-gradient(145deg, rgba(18,12,30,0.78), rgba(8,26,30,0.68), rgba(30,18,10,0.70));
+  backdrop-filter: blur(18px);
+  position: absolute;
+  right: 0;
+  top: 44px;
+  z-index: 99999;
+  pointer-events: auto; /* IMPORTANT */
+}
 
+.mpHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.mpTitle{
+  font-weight: 900;
+  letter-spacing: 1.4px;
+  font-size: 12px;
+  opacity: .9;
+  text-transform: uppercase;
+}
+
+.mpClose{
+  width: 34px; height: 34px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  cursor:pointer;
+}
+
+.mpTrackLine{
+  margin-top: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.mpTrackName{
+  font-weight: 800;
+  font-size: 14px;
+  text-shadow: 0 0 18px var(--glow);
+  overflow:hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+}
+
+.mpStatus{
+  font-size: 11px;
+  opacity:.85;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+}
+.mpStatus.loading{ box-shadow: 0 0 18px rgba(255,255,255,0.12); }
+.mpStatus.ready{ border-color: rgba(140,255,200,0.28); }
+.mpStatus.error{ border-color: rgba(255,160,120,0.35); }
+
+.mpProgress{
+  margin-top: 12px;
+  height: 14px;
+  position: relative;
+  border-radius: 999px;
+  cursor: pointer;
+  user-select:none;
+}
+.mpProgressBg{
+  position:absolute;
+  inset:0;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+}
+.mpProgressFill{
+  position:absolute;
+  left:0; top:0; bottom:0;
+  border-radius: 999px;
+  background: var(--accent);
+}
+.mpProgressOrb{
+  position:absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 18px; height: 18px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0) 55%),
+    radial-gradient(circle, var(--accent), rgba(0,0,0,0));
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.mpControls{
+  margin-top: 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+}
+
+.mpBtn{
+  width: 56px; height: 44px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  cursor:pointer;
+  transition: transform .12s ease;
+}
+.mpBtn:hover{ transform: translateY(-1px); }
+
+.mpPlay{
+  position: relative;
+  width: 86px; height: 56px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  cursor:pointer;
+  overflow:hidden;
+}
+.mpPlayGlyph{
+  position: relative;
+  z-index: 2;
+  font-weight: 900;
+  font-size: 18px;
+}
+.mpPlayAura{
+  position:absolute;
+  inset:-40px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.14), rgba(255,255,255,0) 55%),
+    radial-gradient(circle at 55% 45%, var(--glow), rgba(0,0,0,0) 60%);
+  opacity: .85;
+  animation: mpAura 2.8s ease-in-out infinite;
+}
+.mpPlay.on .mpPlayAura{ opacity: 1; }
+
+@keyframes mpAura{
+  0%,100%{ transform: scale(1); filter: blur(0px); }
+  50%{ transform: scale(1.06); filter: blur(1px); }
+}
+
+.mpVol{
+  margin-top: 14px;
+}
+.mpVolLabel{
+  font-size: 11px;
+  opacity: .82;
+  letter-spacing: 1.1px;
+}
+.mpVolTrack{
+  margin-top: 8px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  overflow:hidden;
+}
+.mpVolFill{
+  height: 100%;
+  background: var(--accent);
+}
+.mpVolInput{
+  margin-top: 8px;
+  width: 100%;
+}
+
+.mpErr{
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--accent);
+  opacity: .95;
+  word-break: break-word;
+}
+/* === OVERRIDE: Music popover smaller + darker + readable === */
+.mysticPlayer{
+  width: 270px !important;
+  padding: 12px !important;
+  border-radius: 18px !important;
+
+  /* darker readable background (no text clash) */
+  background:
+    radial-gradient(420px 200px at 18% 0%, rgba(255,255,255,0.06), rgba(255,255,255,0) 55%),
+    linear-gradient(145deg, rgba(6,6,10,0.92), rgba(8,18,20,0.86), rgba(10,8,6,0.88)) !important;
+
+  box-shadow: 0 0 28px rgba(0,0,0,0.55) !important;
+  backdrop-filter: blur(18px);
+}
+
+/* make controls tighter */
+.mpBtn{ width: 48px !important; height: 40px !important; border-radius: 14px !important; }
+.mpPlay{ width: 76px !important; height: 52px !important; border-radius: 18px !important; }
+.mpTrackName{ max-width: 165px !important; }
+
+/* ensure everything is clickable */
+.mysticPlayer, .mysticPlayer *{ pointer-events: auto !important; }
+.mysticPlayerFixed{
+  position: fixed !important;
+  right: 18px !important;
+  top: 76px !important;
+  z-index: 2147483647 !important;
+}
+
+@media (max-width: 520px){
+  .mysticPlayerFixed{
+    right: 10px !important;
+    left: 10px !important;
+    width: auto !important;
+    top: 68px !important;
+  }
+}
+/* ===============================
+   🔥 EXTRA LIGHT GLASS PANELS
+   almost same brightness as HERO
+   =============================== */
+
+.sectionInner{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.22),
+      rgba(255,255,255,0.16),
+      rgba(255,255,255,0.20)
+    ) !important;
+
+  border: 1px solid rgba(255,255,255,0.35) !important;
+
+  box-shadow:
+    0 0 18px rgba(0,0,0,0.14),
+    0 0 22px rgba(255,200,120,0.22) !important;
+
+  backdrop-filter: blur(14px) saturate(1.05) !important;
+}
+
+/* Inner cards also lighter */
+.gamePanel, .lbPanel, .memePanel, .memePinned, .album{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.18),
+      rgba(255,255,255,0.12),
+      rgba(255,255,255,0.16)
+    ) !important;
+
+  border: 1px solid rgba(255,255,255,0.26) !important;
+  box-shadow: 0 0 14px rgba(0,0,0,0.12) !important;
+}
+/* =========================================
+   HERO-GLASS MATCH (apply to all sections)
+   Makes section panels look EXACTLY like hero plate
+   Paste at END of src/styles.css
+   ========================================= */
+
+/* Keep hero section as-is (already transparent) */
+#home .sectionInner{
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Make ALL other section panels match hero plate */
+.sectionInner{
+  background:
+    radial-gradient(900px 260px at 50% 0%,
+      rgba(255,255,255, calc(var(--heroPlateOpacity, 0.38) * 0.18)),
+      rgba(255,255,255, 0) 55%),
+    radial-gradient(800px 240px at 18% 10%,
+      rgba(255,179,71, calc(var(--heroPlateOpacity, 0.38) * 0.14)),
+      rgba(255,179,71, 0) 55%),
+    radial-gradient(820px 260px at 88% 18%,
+      rgba(90,220,255, calc(var(--heroPlateOpacity, 0.38) * 0.10)),
+      rgba(90,220,255, 0) 60%),
+    linear-gradient(180deg,
+      rgba(0,0,0, calc(var(--heroPlateOpacity, 0.38) * 0.62)),
+      rgba(0,0,0, calc(var(--heroPlateOpacity, 0.38) * 0.36)) 45%,
+      rgba(0,0,0, 0) 100%) !important;
+
+  border: 1px solid rgba(255,255,255,0.14) !important;
+
+  box-shadow:
+    0 10px 34px rgba(0,0,0,0.30),
+    0 0 28px var(--glow) !important;
+
+  backdrop-filter: blur(var(--heroPlateBlur, 12px)) !important;
+  -webkit-backdrop-filter: blur(var(--heroPlateBlur, 12px)) !important;
+}
+
+/* OPTIONAL: if inner cards still look darker, match them too */
+.gamePanel, .lbPanel, .memePanel, .memePinned, .album{
+  background: inherit !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  box-shadow: 0 10px 34px rgba(0,0,0,0.22), 0 0 20px rgba(0,0,0,0.18) !important;
+  backdrop-filter: blur(var(--heroPlateBlur, 12px)) !important;
+}
+/* =========================================
+   MEME MODE PERFORMANCE PATCH (smooth)
+   Paste at END of src/styles.css
+   ========================================= */
+
+/* Overlay should never trigger layout */
+.memeOverlay{
+  contain: layout paint style;
+  transform: translateZ(0);
+}
+
+/* Make bubbles GPU-friendly */
+.memeBubble{
+  will-change: transform;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Remove heavy effects that cause stutter */
+.memeBubble{
+  /* blur + backdrop-filter = expensive on many moving nodes */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Keep look but cheaper */
+.memeBubbleInner{
+  will-change: opacity, transform;
+  transform: translate3d(0,0,0);
+}
+
+/* Reduce expensive blend-mode on moving elements */
+.memeBubbleInner{
+  mix-blend-mode: normal !important;
+}
+
+/* Images: GPU-friendly */
+.memeBubble img{
+  will-change: transform;
+  transform: translate3d(0,0,0) scale(1.10);
+  backface-visibility: hidden;
+  image-rendering: auto;
+}
+
+/* OPTIONAL: If still stutters, lower opacity a bit */
+.memeOverlay{ opacity: 0.42 !important; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .memeBubble, .memeBubbleInner, .memeBubble img{
+    will-change: auto !important;
+    transform: none !important;
+  }
+}
+/* ===== MEME MODE — Smooth + Visible (10 memes safe) ===== */
+
+/* 1) Ümumi overlay görünürlüğü (parlaq) */
+.memeOverlay{
+  opacity: 0.78 !important;          /* əvvəlki 0.42 idi */
+}
+
+/* 2) Bubble-lar daha oxunaqlı olsun (parlaqlıq) */
+.memeBubble{
+  background: rgba(255,255,255,0.11) !important;
+  border-color: rgba(255,255,255,0.30) !important;
+  box-shadow: 0 0 18px rgba(255,255,255,0.08), 0 0 26px rgba(255,179,71,0.10) !important;
+  will-change: transform;            /* smooth hərəkət */
+  transform: translate3d(0,0,0);     /* GPU */
+}
+
+/* 3) Şəkillər daha görünən olsun */
+.memeBubble img{
+  opacity: 0.96 !important;          /* əvvəl 0.80 idi */
+  filter: saturate(1.08) contrast(1.06);
+}
+
+/* 4) “Donma”nı azaldan perf ayarları (10 meme üçün safe) */
+@media (prefers-reduced-motion: no-preference){
+  .memeBubble{
+    backface-visibility: hidden;
+  }
+}
+/* =========================================
+   PETRUL — SEAMLESS SIDE FLAMES (NO JANK)
+   - CSS-only
+   - true loop (two strips, no reset feeling)
+   - GPU friendly
+   ========================================= */
+
+/* layer container */
+.sideFlame{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 150px;                 /* istəsən 120-180 arası */
+  pointer-events: none;
+  z-index: 2;                   /* bgArt(0), veil(1), flames(2), content(10) */
+  opacity: 0.60;
+  overflow: hidden;
+
+  /* perf */
+  will-change: transform;
+  transform: translateZ(0);
+  contain: paint;               /* böyük repaint-ləri azaldır */
+}
+
+/* left/right placement */
+.sideFlame.left{ left: -46px; }
+.sideFlame.right{ right: -46px; transform: translateZ(0) scaleX(-1); }
+
+/* two strips (2x height) for seamless loop */
+.sideFlame::before,
+.sideFlame::after{
+  content:"";
+  position:absolute;
+  left:-12%;
+  width:124%;
+  height:200%;
+  top:0;
+
+  /* Flame texture (lightweight gradients only) */
+  background:
+    radial-gradient(70px 220px at 45% 98%, rgba(255,200,110,0.70), transparent 72%),
+    radial-gradient(90px 260px at 55% 86%, rgba(255,140,60,0.60), transparent 74%),
+    radial-gradient(120px 320px at 50% 70%, rgba(255,95,35,0.42), transparent 76%),
+    radial-gradient(160px 420px at 50% 52%, rgba(255,70,25,0.28), transparent 78%),
+    linear-gradient(180deg,
+      rgba(0,0,0,0) 0%,
+      rgba(255,150,70,0.05) 55%,
+      rgba(255,110,45,0.12) 78%,
+      rgba(255,80,30,0.18) 100%
+    );
+
+  mix-blend-mode: screen;
+  filter: blur(7px) saturate(1.25);
+  will-change: transform;
+  transform: translate3d(0,0,0);
+}
+
+/* first strip */
+.sideFlame::before{
+  top: 0;
+  animation: flameMarquee 18s linear infinite, flameBreath 5.2s ease-in-out infinite;
+  opacity: 1;
+}
+
+/* second strip starts exactly after first -> no gap/no reset */
+.sideFlame::after{
+  top: -200%;
+  animation: flameMarquee 18s linear infinite, flameBreath 6.1s ease-in-out infinite;
+  opacity: 0.92;
+}
+
+/* the key: move exactly 200% continuously */
+@keyframes flameMarquee{
+  0%   { transform: translate3d(0,0,0); }
+  100% { transform: translate3d(0,200%,0); }
+}
+
+/* subtle “breathing” (not tied to loop) */
+@keyframes flameBreath{
+  0%,100% { filter: blur(7px) saturate(1.20) brightness(1.02); opacity: 0.58; }
+  50%     { filter: blur(8px) saturate(1.34) brightness(1.08); opacity: 0.66; }
+}
+
+/* mobile lighter */
+@media (max-width: 900px){
+  .sideFlame{ width: 105px; opacity: 0.42; }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .sideFlame::before,
+  .sideFlame::after{ animation: none !important; }
+}
+/* =========================================
+   SIDE FLAMES v2 (behind content, seamless flow)
+   Paste at VERY END of src/styles.css
+   ========================================= */
+
+/* 1) Flames sit ABOVE background, BELOW content cards */
+.sideFlames{
+  position: fixed !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 180px !important;
+  pointer-events: none !important;
+
+  /* IMPORTANT: keep it behind your UI/content */
+  z-index: 2 !important;          /* bgArt=0, bgVeil=1, flames=2, content(.main/.topbar)=10+ */
+
+  opacity: 0.42 !important;       /* less dark */
+  mix-blend-mode: screen !important;
+  overflow: hidden !important;
+
+  transform: translateZ(0) !important;
+  will-change: transform !important;
+  contain: paint !important;
+}
+
+.sideFlames.left{ left: -70px !important; }
+.sideFlames.right{ right: -70px !important; transform: translateZ(0) scaleX(-1) !important; }
+
+/* 2) Two seamless strips that scroll downward continuously */
+.sideFlames::before,
+.sideFlames::after{
+  content:"" !important;
+  position:absolute !important;
+  left:-18% !important;
+  width:136% !important;
+  height:200% !important;
+
+  /* start positions */
+  top: 0;
+
+  background:
+    radial-gradient(110px 320px at 50% 96%, rgba(255,210,140,0.90), transparent 70%),
+    radial-gradient(140px 420px at 58% 82%, rgba(255,150,80,0.78), transparent 72%),
+    radial-gradient(190px 520px at 52% 62%, rgba(255,95,35,0.58), transparent 76%),
+    radial-gradient(260px 680px at 50% 42%, rgba(255,40,10,0.38), transparent 80%),
+    linear-gradient(180deg,
+      rgba(0,0,0,0) 0%,
+      rgba(255,170,90,0.10) 55%,
+      rgba(255,120,55,0.18) 78%,
+      rgba(255,70,25,0.24) 100%
+    );
+
+  filter: blur(6px) saturate(1.55) brightness(1.08) !important;
+  will-change: transform !important;
+  transform: translate3d(0,0,0) !important;
+}
+
+/* Strip A */
+.sideFlames::before{
+  top: 0 !important;
+  animation: sideFlameMarqueeDown 16s linear infinite, sideFlameBreath 5.2s ease-in-out infinite;
+  opacity: 1;
+}
+
+/* Strip B (starts exactly above A, no gap, no reset feel) */
+.sideFlames::after{
+  top: -200% !important;
+  animation: sideFlameMarqueeDown 16s linear infinite, sideFlameBreath 6.1s ease-in-out infinite;
+  opacity: 0.92;
+}
+
+/* DOWNWARD flow */
+@keyframes sideFlameMarqueeDown{
+  0%   { transform: translate3d(0,0,0); }
+  100% { transform: translate3d(0,200%,0); }
+}
+
+/* subtle living flame, not heavy */
+@keyframes sideFlameBreath{
+  0%,100% { filter: blur(6px) saturate(1.45) brightness(1.02); }
+  50%     { filter: blur(7px) saturate(1.70) brightness(1.12); }
+}
+
+/* Mobile: smaller + lighter */
+@media (max-width: 900px){
+  .sideFlames{
+    width: 120px !important;
+    opacity: 0.30 !important;
+  }
+  .sideFlames.left{ left: -50px !important; }
+  .sideFlames.right{ right: -50px !important; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .sideFlames::before,
+  .sideFlames::after{ animation: none !important; }
+}
+/* =========================================
+   HERO-GLASS MATCH (apply to all sections)
+   Makes section panels look EXACTLY like hero plate
+   Paste at END of src/styles.css
+   ========================================= */
+
+/* Keep hero section as-is (already transparent) */
+#home .sectionInner{
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Make ALL other section panels match hero plate */
+.sectionInner{
+  background:
+    radial-gradient(900px 260px at 50% 0%,
+      rgba(255,255,255, calc(var(--heroPlateOpacity, 0.38) * 0.18)),
+      rgba(255,255,255, 0) 55%),
+    radial-gradient(800px 240px at 18% 10%,
+      rgba(255,179,71, calc(var(--heroPlateOpacity, 0.38) * 0.14)),
+      rgba(255,179,71, 0) 55%),
+    radial-gradient(820px 260px at 88% 18%,
+      rgba(90,220,255, calc(var(--heroPlateOpacity, 0.38) * 0.10)),
+      rgba(90,220,255, 0) 60%),
+    linear-gradient(180deg,
+      rgba(0,0,0, calc(var(--heroPlateOpacity, 0.38) * 0.62)),
+      rgba(0,0,0, calc(var(--heroPlateOpacity, 0.38) * 0.36)) 45%,
+      rgba(0,0,0, 0) 100%) !important;
+
+  border: 1px solid rgba(255,255,255,0.14) !important;
+
+  box-shadow:
+    0 10px 34px rgba(0,0,0,0.30),
+    0 0 28px var(--glow) !important;
+
+  backdrop-filter: blur(var(--heroPlateBlur, 12px)) !important;
+  -webkit-backdrop-filter: blur(var(--heroPlateBlur, 12px)) !important;
+}
+
+/* OPTIONAL: if inner cards still look darker, match them too */
+.gamePanel, .lbPanel, .memePanel, .memePinned, .album{
+  background: inherit !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  box-shadow: 0 10px 34px rgba(0,0,0,0.22), 0 0 20px rgba(0,0,0,0.18) !important;
+  backdrop-filter: blur(var(--heroPlateBlur, 12px)) !important;
+}
+.hero {
+  position: relative;
+}
+
+.hero-mascot {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 120px;
+  pointer-events: none;
+}
+.topbarMascot{
+  position: absolute;
+  left: 240px;        /* PETRUL yazısından sonra boş yer */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: auto;
+  pointer-events: none; /* düymələrə / linklərə mane olmasın */
+  z-index: 30;
+}
+
+/* Mobil üçün kiçilsin */
+@media (max-width: 768px){
+  .topbarMascot{
+    left: 190px;
+    width: 40px;
+    opacity: .9;
+  }
+}

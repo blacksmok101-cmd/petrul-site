@@ -25,12 +25,16 @@ export default function App() {
 
   useEffect(() => storage.set("petrul_theme_idx", themeIdx), [themeIdx]);
   useEffect(() => storage.set("petrul_meme_mode", memeMode), [memeMode]);
+  
+ useEffect(() => {
+  document.documentElement.style.setProperty("--accent", theme.accent);
+  document.documentElement.style.setProperty("--glow", theme.glow);
+  document.documentElement.style.setProperty("--text", theme.text);
+  document.documentElement.style.setProperty("--muted", theme.muted);
+  document.documentElement.style.setProperty("--font-title", theme.titleFont);
+  document.documentElement.style.setProperty("--font-body", theme.bodyFont);
+}, [theme]);
 
-  useEffect(() => {
-    document.documentElement.style.setProperty("--accent", theme.accent);
-    document.documentElement.style.setProperty("--glow", theme.glow);
-    document.documentElement.style.setProperty("--font", theme.font);
-  }, [theme]);
 
   const switchDesign = () => setThemeIdx((i) => (i + 1) % themes.length);
 
